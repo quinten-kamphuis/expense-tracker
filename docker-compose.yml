@@ -12,7 +12,7 @@ services:
 
   server:
     build:
-      context: ./src/server
+      context: .
       dockerfile: Dockerfile
     environment:
       - NODE_ENV=production

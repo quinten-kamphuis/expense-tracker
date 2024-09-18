@@ -16,5 +16,8 @@ COPY . .
 # Expose the port the app runs on
 EXPOSE 3000
 
+# Set the working directory to the server folder
+WORKDIR /app/src/server
+
 # Run the app
 CMD ["bun", "run", "index.ts"]
