@@ -1,0 +1,70 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: |
+          cat << EOF > .env
+          NODE_ENV=production
+          BASE_URL=${{ vars.BASE_URL }}
+          EOF
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+
+      - name: Deploy to Server
+        env:
+          SERVER_IP: ${{ vars.SERVER_IP }}
+          SERVER_USER: ${{ vars.SERVER_USER }}
+        run: |
+          # Create the directory if it doesn't exist
+          ssh ${SERVER_USER}@${SERVER_IP} "mkdir -p /apps/expense-tracker"
+
+          # Use rsync to copy files
+          rsync -avz --delete ./ ${SERVER_USER}@${SERVER_IP}:/apps/expense-tracker/
+
+          # Setup and deploy
+          ssh ${SERVER_USER}@${SERVER_IP} << EOF
+            set -e  # Exit immediately if a command exits with a non-zero status
+            set -x  # Print commands and their arguments as they are executed
+
+            # Update package list
+            sudo apt-get update
+
+            # Install Docker if not already installed
+            if ! command -v docker &> /dev/null; then
+              sudo apt-get install -y docker.io
+            fi
+
+            # Install Docker Compose if not already installed
+            if ! command -v docker-compose &> /dev/null; then
+              sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+              sudo chmod +x /usr/local/bin/docker-compose
+            fi
+
+            # Navigate to the project directory
+            cd /apps/expense-tracker || { echo "Failed to navigate to /apps/expense-tracker. Aborting."; exit 1; }
+
+            # Verify the Docker Compose file
+            docker-compose config || { echo "Docker Compose configuration is invalid. Aborting."; exit 1; }
+
+            # Build and start Docker containers
+            echo "Starting build process..."
+            docker-compose -p expense-tracker up -d --build --remove-orphans || { echo "Failed to build and start Docker containers. Aborting."; exit 1; }
+          EOF
