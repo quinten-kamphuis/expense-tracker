@@ -1,20 +1,20 @@
-# Use an official Node runtime as a parent image
-FROM node:20-alpine
+# Use the official Bun image
+FROM oven/bun:latest
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# If you have a bun.lockb file, copy it as well
+COPY bun.lockb .
 
-# Install dependencies
-RUN npm install
+# Install dependencies if you have any
+RUN bun install
 
-# Copy the current directory contents into the container
+# Copy the entire server directory
 COPY . .
 
-# Make port 3000 available to the world outside this container
+# Expose the port the app runs on
 EXPOSE 3000
 
-# Run the app when the container launches
-CMD ["bun", "index.js"]
+# Run the app
+CMD ["bun", "run", "index.ts"]
