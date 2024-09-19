@@ -36,10 +36,8 @@ function App() {
         <p>
           <strong>Total spent:</strong> ${totalSpent}
         </p>
+        <p>Random number: {Math.floor(Math.random() * 100)}</p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }
