@@ -12,7 +12,8 @@
     "dev": "bun run dev:server & bun run dev:client",
     "build": "bun run build:server && bun run build:client",
     "start": "bun run start:server",
-    "format": "prettier --write ./src"
+    "format": "prettier --write ./src",
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",

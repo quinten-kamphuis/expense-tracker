@@ -9,6 +9,7 @@ COPY . .
 
 # Install dependencies if you have any
 RUN bun install
+RUN bun run type-check
 
 # Expose the port the app runs on
 EXPOSE 3000

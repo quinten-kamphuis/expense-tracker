@@ -10,6 +10,9 @@ COPY package*.json ./
 # Install dependencies
 RUN bun install
 
+# Lint the code
+RUN bun run lint
+
 # Copy the current directory contents into the container
 COPY . .
 
