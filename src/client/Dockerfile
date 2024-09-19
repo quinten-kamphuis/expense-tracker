@@ -16,11 +16,6 @@ COPY . .
 # Build the app
 RUN bun run build
 
-# Install a simple http server for serving static content
-RUN bun install -g http-server
-
-# Make port 8080 available to the world outside this container
-EXPOSE 8080
-
-# Run the app when the container launches
-CMD ["http-server", "dist", "-p", "8080"]
+FROM alpine:latest
+COPY --from=build /app/dist /var/www/expense-tracker
+CMD ["tail", "-f", "/dev/null"]

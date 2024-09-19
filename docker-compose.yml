@@ -3,23 +3,22 @@ services:
     build:
       context: ./src/client
       dockerfile: Dockerfile
-    ports:
-      - "5501:8080"
+    container_name: expense-tracker_client
+    volumes:
+      - ./dist:/var/www/project1
+    networks:
+      - caddy_net
     depends_on:
       - server
-    networks:
-      - expense-tracker_network
 
   server:
     build:
       context: .
       dockerfile: Dockerfile
-    environment:
-      - NODE_ENV=production
+    container_name: expense-tracker_server
     networks:
-      - expense-tracker_network
-
+      - caddy_net
 
 networks:
-  expense-tracker_network:
-    driver: bridge
+  caddy_net:
+    external: true
