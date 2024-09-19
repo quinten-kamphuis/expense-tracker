@@ -27,9 +27,10 @@
     // Paths
     "baseUrl": "src",
     "paths": {
-      "@client/*": ["client/*"],
+      "@/*": ["client/src/*"],
       "@server/*": ["server/*"],
       "@shared/*": ["shared/*"]
     }
-  }
+  },
+  "include": ["src"]
 }

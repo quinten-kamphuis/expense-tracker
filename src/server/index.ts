@@ -4,4 +4,4 @@ Bun.serve({
   fetch: app.fetch,
 });
 
-console.log('Hello via Bun!');
+console.log('Bun server running on port 3000');
