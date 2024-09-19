@@ -10,6 +10,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       '@server': path.resolve(__dirname, '../server'),
       '@shared': path.resolve(__dirname, '../shared'),
+      'hono/client': path.resolve(__dirname, './src/lib/hono-client-stub.ts'),
     },
   },
   server: {
