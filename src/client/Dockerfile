@@ -1,5 +1,5 @@
-# Use an official Node runtime as a parent image
-FROM node:20-alpine
+# Use the official image as a parent image
+FROM oven/bun:latest
 
 # Set the working directory in the container
 WORKDIR /app
