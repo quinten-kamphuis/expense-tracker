@@ -20,6 +20,7 @@ jobs:
           cat << EOF > .env
           NODE_ENV=production
           BASE_URL=${{ vars.BASE_URL }}
+          DATABASE_URL=${{ vars.DATABASE_URL }}
           EOF
 
       - name: Install SSH Key
