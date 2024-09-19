@@ -6,7 +6,7 @@ services:
     container_name: expense-tracker_client
     volumes:
       - static-files:/var/www
-    command: sh -c "cp -rv /app/dist/ /var/www/ && tail -f /dev/null"
+    command: sh -c "cp -rv /app/dist/ /var/www/expense-tracker && tail -f /dev/null"
     networks:
       - caddy_net
     depends_on:
