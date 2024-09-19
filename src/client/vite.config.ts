@@ -13,7 +13,10 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': 'http://localhost:3000',
+      target:
+        process.env.NODE_ENV === 'production'
+          ? 'http://server:3000'
+          : 'http://localhost:3000',
     },
   },
 });
