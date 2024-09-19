@@ -9,6 +9,7 @@ services:
     command: sh -c "cp -rv /app/expense-tracker/ /var/www/ && tail -f /dev/null"
     networks:
       - caddy_net
+      - postgres_network
     depends_on:
       - server
 
@@ -19,9 +20,12 @@ services:
     container_name: expense-tracker_server
     networks:
       - caddy_net
+      - postgres_network
 
 networks:
   caddy_net:
+    external: true
+  postgres_network:
     external: true
 
 volumes:
