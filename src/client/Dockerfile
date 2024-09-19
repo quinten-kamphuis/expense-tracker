@@ -8,16 +8,16 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN bun install
 
 # Copy the current directory contents into the container
 COPY . .
 
 # Build the app
-RUN npm run build
+RUN bun run build
 
 # Install a simple http server for serving static content
-RUN npm install -g http-server
+RUN bun install -g http-server
 
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
