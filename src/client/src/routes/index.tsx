@@ -12,14 +12,15 @@ const Index = () => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['total-spent'],
     queryFn: async () => {
+      // const data = await fetch('/api/expenses/total-spent');
       const data = await api.expenses['total-spent'].$get();
       return await data.json();
     },
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div className="mt-32">Loading...</div>;
 
-  if (isError) return <div>Error: {error.message}</div>;
+  if (isError) return <div className="mt-32">Error: {error.message}</div>;
 
   return (
     <div className="flex h-svh flex-col items-center justify-center">
