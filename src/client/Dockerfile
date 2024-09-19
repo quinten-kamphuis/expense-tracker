@@ -1,5 +1,5 @@
 # Use the official image as a parent image
-FROM oven/bun:latest as build
+FROM oven/bun:1.1-slim as build
 
 # Set the working directory in the container
 WORKDIR /app
