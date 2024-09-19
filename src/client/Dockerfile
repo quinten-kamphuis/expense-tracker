@@ -19,14 +19,14 @@ RUN bun run build
 # Use a lightweight base image for the final stage
 FROM alpine:latest
 
-# Create the directory where Caddy expects the files
-RUN mkdir -p /var/www/expense-tracker
+# Create the directory for the built files
+RUN mkdir -p /app/dist
 
 # Copy the built files from the build stage
-COPY --from=build /app/dist /var/www/expense-tracker
+COPY --from=build /app/dist /app/dist
 
-# List contents of the target directory
-RUN ls -la /var/www/expense-tracker
+# List contents of the target directory to verify copy
+RUN ls -la /app/dist
 
 # Keep the container running
 CMD ["tail", "-f", "/dev/null"]
