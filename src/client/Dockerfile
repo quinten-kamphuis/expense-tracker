@@ -16,17 +16,13 @@ COPY . .
 # Build the app
 RUN bun run build
 
-# Use a lightweight base image for the final stage
+# Final stage
 FROM alpine:latest
 
-# Create the directory for the built files
-RUN mkdir -p /app/dist/expense-tracker
-
 # Copy the built files from the build stage
-COPY --from=build /app/dist /app/dist/expense-tracker
+COPY --from=build /app/dist /app/expense-tracker
 
-# List contents of the target directory to verify copy
-RUN ls -la /app/dist/expense-tracker
+# Verify the copy
+RUN ls -la /app/expense-tracker
 
-# Keep the container running
 CMD ["tail", "-f", "/dev/null"]
