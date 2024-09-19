@@ -19,7 +19,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className="flex h-svh flex-col items-center justify-center">
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -38,7 +38,7 @@ function App() {
         </p>
         <p>Random number: {Math.floor(Math.random() * 100)}</p>
       </div>
-    </>
+    </div>
   );
 }
 
