@@ -13,6 +13,7 @@ function App() {
     fetch('/api/expenses/total-spent')
       .then(res => res.json())
       .then(data => {
+        console.log(data);
         setTotalSpent(data.total);
       });
   }, []);
